@@ -4,6 +4,7 @@ const usersRoute = express.Router();
 
 const { books, films, users } = require("../../data.js");
 
+//get user by ID
 usersRoute.get("/:id", (req, res) => {
   // console.log("we're working fine over here!");
   // console.log(users);
@@ -19,6 +20,7 @@ usersRoute.get("/:id", (req, res) => {
   });
 });
 
+//get all users
 usersRoute.get("/", (req, res) => {
   //   console.log("we're working fine over here!");
 
@@ -29,6 +31,7 @@ usersRoute.get("/", (req, res) => {
   });
 });
 
+//create a user
 usersRoute.post("/", (req, res) => {
   //   console.log("ready to post!)
 
@@ -54,6 +57,27 @@ usersRoute.post("/", (req, res) => {
   res.json({
     user: {
       ...newUser,
+    },
+  });
+});
+
+//delete a user by ID
+usersRoute.delete("/:id", (req, res) => {
+  //   console.log("ok ok I'll delete the user, seshh!");
+
+  const foundUserId = users.find((user) => user.id === Number(req.params.id));
+
+  const index = users.indexOf(foundUserId);
+
+  users.splice(index, 1);
+
+  if (!foundUserId) {
+    return res.status(404).json("A user with the provided ID does not exist");
+  }
+
+  res.status(200).json({
+    user: {
+      ...foundUserId,
     },
   });
 });
