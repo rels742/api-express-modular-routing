@@ -14,10 +14,9 @@ app.use(morgan("dev"));
 const usersRoute = require("./src/routers/users");
 
 // ADD ROUTERS TO APP
+app.use("/users", usersRoute);
 
 // const { books, films, users } = require("./data.js");
-
-app.use("/users", usersRoute);
 
 /* START SERVER */
 app.listen(port, () => {

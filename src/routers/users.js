@@ -19,4 +19,43 @@ usersRoute.get("/:id", (req, res) => {
   });
 });
 
+usersRoute.get("/", (req, res) => {
+  //   console.log("we're working fine over here!");
+
+  const allUsers = users;
+
+  res.json({
+    users: allUsers,
+  });
+});
+
+usersRoute.post("/", (req, res) => {
+  //   console.log("ready to post!)
+
+  const userId = users.length + 1;
+  const newUser = {
+    ...req.body,
+    id: userId,
+  };
+
+  users.push(newUser);
+
+  if (!newUser) {
+    return (
+      res.status(400).json({
+        error: "Miissing fields in request body",
+      }) ||
+      res.status(409).json({
+        error: "a user with the provided email already exists ",
+      })
+    );
+  }
+
+  res.json({
+    user: {
+      ...newUser,
+    },
+  });
+});
+
 module.exports = usersRoute;
