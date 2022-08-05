@@ -82,4 +82,22 @@ usersRoute.delete("/:id", (req, res) => {
   });
 });
 
+usersRoute.put("/:id", (req, res) => {
+  //   console.log("update in progress..");
+
+  const preUpdate = users.find((user) => (user.id = Number(req.params.id)));
+
+  const index = users.indexOf(preUpdate);
+
+  users.splice(index, 1, { ...req.body });
+
+  const updatedUser = users.find((user) => (user.id = Number(req.params.id)));
+
+  res.json({
+    user: {
+      ...updatedUser,
+    },
+  });
+});
+
 module.exports = usersRoute;
